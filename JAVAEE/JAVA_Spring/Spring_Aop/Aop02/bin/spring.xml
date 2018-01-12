@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+	<bean id="bookService" class="com.hellojava.business.impl.BookService"></bean>
+	<bean id="bookService1" class="com.hellojava.business.impl.BookService1"></bean>
+	
+	<bean id="log" class="com.hellojava.aspect.impl.Log"></bean>
+	
+	<!-- aop配置 -->
+	<aop:config>
+		<!-- 定义连接点 (在什么地点加入通知) -->
+		<aop:pointcut expression="execution(* com.hellojava.business.IBookService.save(..))" id="point1"/>
+		<aop:pointcut expression="execution(* com.hellojava.business.IBookService.*(..))" id="point2"/>
+		<!-- 配置切面(切面引用的是log) -->
+		<aop:aspect ref="log">
+			<!-- 定义后置通知 调用的log对象after方法 在什么时候调用在point1的地方调用 -->
+			<!-- <aop:after method:"after" pointcut-ref="point1"/>
+			<aop:before method:"before" pointcut-ref="point1"/> -->
+			<aop:around method="around" pointcut-ref="point2"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
