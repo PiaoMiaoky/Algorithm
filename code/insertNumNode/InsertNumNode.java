@@ -23,11 +23,15 @@ public class InsertNumNode {
 
     }
     public static void print(Node head){
-        System.out.print("Linked List:");
-        while(head!=null){
-            System.out.print(head.value+"  ");
-            head = head.next;
+        if (head == null){
+            return;
         }
-        System.out.println();
+        System.out.print("Circular List: " + head.value + " ");
+        Node cur = head.next;
+        while (cur != head) {
+            System.out.print(cur.value + " ");
+            cur = cur.next;
+        }
+        System.out.println("-> " + head.value);
     }
 }
